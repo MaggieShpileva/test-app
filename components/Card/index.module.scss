@@ -1,0 +1,47 @@
+.card {
+  padding: 10px;
+  width: 100dvw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 10px;
+
+  .content {
+    .title {
+      color: #232032;
+      font-size: 60px;
+      margin-bottom: 15px;
+    }
+    .subtitle {
+      color: #232032;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .description {
+      margin: 20px 0 43px;
+      color: rgba(35, 32, 50, 0.70);
+      font-size: 18px;
+    }
+  }
+  .image {
+    position: relative !important;
+    width: 100%;
+    object-fit: cover;
+    height: 100dvh !important;
+    object-position: center;
+  }
+
+  .cardButton {
+    padding: 23px 38px 23px 25px;
+    background: #232032;
+    border-radius: 38px;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    display: inline-flex;
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 22px;
+  }
+}
