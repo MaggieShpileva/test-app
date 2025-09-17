@@ -14,9 +14,39 @@ export async function GET(
   try {
     const { path: filePath } = await params;
     const decodedPath = decodeURIComponent(filePath);
-    const fullPath = path.join(process.cwd(), decodedPath);
     
+    // Проверяем, находимся ли мы в production (Vercel)
+    if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+      // В production используем fallback или внешнее хранилище
+      return NextResponse.json({
+        path: `/var/task/${decodedPath}`,
+        content: `---
+id: pari
+title: pari
+slug: ''
+excerpt: ''
+published: true
+tags: []
+author: ''
+featuredImage: ''
+subtitle: Интерактивный лендинг с мини-игрой в жанре 2D-раннера
+description: >-
+ Мы разработали AI-аватары двух персонажей, которые общаются с детьми в
+ контексте мультфильма, включая аудио- и видеоконтент. Для безопасности
+ внедрили фильтрацию тем и предустановленные интенты (например, «где купить
+ игрушку»)
+image: 'https://i.pinimg.com/1200x/fe/c8/13/fec813e8050851e2355a4252d736205d.jpg'
+---
+
+# pari`,
+        isMarkdown: isMarkdownFile(decodedPath),
+      });
+    }
+    
+    // В development используем файловую систему
+    const fullPath = path.join(process.cwd(), decodedPath);
     const content = await readFileContent(fullPath);
+    
     if (content === '') {
       return NextResponse.json(
         { error: 'File not found' },
